@@ -1,0 +1,104 @@
+# CI/CD workflow
+# CI validates the application.
+# CD deploys it only after validation succeeds.
+
+name: Portfolio CI/CD
+
+# Run the workflow when code is pushed to main
+# or when a Pull Request targets main.
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+# Permissions required by the GitHub Pages deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Prevent multiple deployments from running simultaneously.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+
+  # =========================
+  # CI — Validation
+  # =========================
+  validate:
+
+    # GitHub provides a temporary Ubuntu machine.
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Download repository code onto the runner.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Install Node.js.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Install exact dependencies from package-lock.json.
+      - name: Install dependencies
+        run: npm ci
+
+      # Check code quality using ESLint.
+      - name: Run lint
+        run: npm run lint
+
+      # Create the production build.
+      - name: Build application
+        run: npm run build
+
+      # Save the production build so the deploy job can use it.
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-build
+          path: ./dist
+
+
+  # =========================
+  # CD — Deployment
+  # =========================
+  deploy:
+
+    # Deployment starts only after the validate job succeeds.
+    needs: validate
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Download the production build created by the validate job.
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: portfolio-build
+          path: ./dist
+
+      # Configure GitHub Pages.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Prepare the production files for GitHub Pages.
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      # Deploy the artifact to GitHub Pages.
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
