@@ -1,0 +1,51 @@
+# CI (Continuous Integration)
+# This workflow automatically checks the project when code is pushed
+# or when changes are made through a Pull Request.
+
+name: Portfolio CI
+
+# Defines when GitHub Actions should run this workflow.
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+    branches:
+      - main
+
+# A workflow contains one or more jobs.
+jobs:
+  build-and-check:
+
+    # GitHub provides a temporary Ubuntu machine to run this job.
+    runs-on: ubuntu-latest
+
+    # Steps are executed sequentially from top to bottom.
+    steps:
+
+      # Step 1: Download the repository code onto the GitHub runner.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js on the GitHub runner.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Step 3: Install dependencies using package-lock.json.
+      # npm ci is commonly used in CI because it provides a clean,
+      # reproducible dependency installation.
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Run ESLint to check the code.
+      - name: Run lint
+        run: npm run lint
+
+      # Step 5: Create the production build.
+      # This runs "tsc -b && vite build" from package.json.
+      - name: Build application
+        run: npm run build
