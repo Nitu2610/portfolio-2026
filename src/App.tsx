@@ -1,6 +1,7 @@
 
 
 import { Navbar } from './components/Navbar'
+import { ParticleBackground } from './components/ParticleBackground'
 import { About } from './sections/About'
 import { Contact } from './sections/Contact'
 import { Experience } from './sections/Experience'
@@ -14,6 +15,8 @@ function App() {
 
   return (
     <div className="relative gradient text-white">
+    <ParticleBackground/>
+
     <Navbar/>
     <Hero/>
     <About/>
