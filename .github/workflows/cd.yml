@@ -1,0 +1,68 @@
+# CD (Continuous Deployment)
+# This workflow builds the production application
+# and deploys it to GitHub Pages.
+
+name: Portfolio CD
+
+# Run deployment whenever changes are pushed to main.
+on:
+  push:
+    branches:
+      - main
+
+# Required permissions for GitHub Pages deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Prevent multiple deployments from running at the same time.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+
+  # Job responsible for building and deploying the portfolio.
+  deploy:
+
+    # GitHub provides a temporary Ubuntu machine for this job.
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # Step 1: Download the repository code onto the runner.
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js on the GitHub runner.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # Step 3: Install dependencies using package-lock.json.
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Create the production build.
+      # This runs "tsc -b && vite build".
+      - name: Build application
+        run: npm run build
+
+      # Step 5: Configure GitHub Pages.
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # Step 6: Upload the Vite production output.
+      # Vite creates the production files inside dist/.
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      # Step 7: Deploy the uploaded artifact to GitHub Pages.
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
