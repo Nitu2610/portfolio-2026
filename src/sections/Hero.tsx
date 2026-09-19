@@ -9,7 +9,7 @@ const socials = [
   {
     Icon: FaLinkedinIn,
     label: "LinkedIn",
-    href: "www.linkedin.com\in\nitesh-kumar-d-296631a0",
+    href: "https://www.linkedin.com/in/nitesh-kumar-mern",
   },
   { Icon: FaGithub, label: "GitHub", href: "https://github.com/Nitu2610" },
 ];
