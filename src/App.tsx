@@ -10,7 +10,7 @@ import { Footer } from './sections/Footer'
 import { Hero } from './sections/Hero'
 import { Projects } from './sections/Projects'
 import { Skills } from './sections/Skills'
-import { PageLoader } from './components/PageLoader'
+import { IntroPageLoader } from './components/IntroPageLoader'
 
 
 
@@ -21,7 +21,7 @@ const [introDone, setIntroDone]=useState(false);
   return (
 
     <>
-{!introDone && <PageLoader onFinish={()=> setIntroDone(true)}/>}
+{!introDone && <IntroPageLoader onFinish={()=> setIntroDone(true)}/>}
 
   {introDone && (
 

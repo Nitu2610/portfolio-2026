@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 interface PageLoaderProps { onFinish: () => void; }
 
 
-export const PageLoader = ({ onFinish }: PageLoaderProps) => {
+export const IntroPageLoader = ({ onFinish }: PageLoaderProps) => {
   const greeting = useMemo(
     () => [
       "Hello",
@@ -36,7 +36,7 @@ export const PageLoader = ({ onFinish }: PageLoaderProps) => {
     }
   }, [index, greeting.length]);
   return (
-    <AnimatePresence onExitComplete={() => onFinish}>
+    <AnimatePresence onExitComplete={() => onFinish()}>
       {visible && (
         <motion.div
           className="fixed inset-0 z-9999 flex items-center justify-center bg-black text-white overflow-hidden"
