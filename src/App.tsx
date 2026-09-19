@@ -23,7 +23,7 @@ const [introDone, setIntroDone]=useState(false);
     <>
 {!introDone && <PageLoader onFinish={()=> setIntroDone(true)}/>}
 
-  {!introDone && (
+  {introDone && (
 
  
 
