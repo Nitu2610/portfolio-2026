@@ -11,7 +11,7 @@ import {
 } from "react-icons/si";
 import { motion, useMotionValue } from "framer-motion";
 
-import { useEffect, useRef, useState, type TouchEvent } from "react";
+import { useEffect, useRef, useState,  } from "react";
 
 export const Skills = () => {
   const skills = [
