@@ -1,5 +1,5 @@
 
-
+import { motion } from "framer-motion";
 import { useState } from 'react'
 import { CustomCursor } from './components/CustomCursor'
 import { Navbar } from './components/Navbar'
@@ -33,7 +33,7 @@ const [introDone, setIntroDone]=useState(false);
     <Navbar/>
     <Hero/>
     <About/>
-    <Skills/>
+      <Skills/>
     <Projects/>
     <Experience/>
     <Contact/>
