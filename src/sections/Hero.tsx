@@ -116,7 +116,7 @@ bg-gradient-to-r from-[#1cd8d2] via-[#00bf8f] to-[#302b63] drop-shadow-lg"
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
             >
-              Hello I'm
+              Hello, I'm
               <br />
               <span className="text-white font-bold text-5xl sm:text-6xl md:text-7xl lg:text-8xl lg:whitespace-nowrap ">
                 Nitesh Kumar
@@ -129,9 +129,9 @@ bg-gradient-to-r from-[#1cd8d2] via-[#00bf8f] to-[#302b63] drop-shadow-lg"
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
             >
-              I turn complex ideas into seamless, high-impact web experiencs-
-              building modern, scalable, and lighting-fast applicaions that make
-              a difference.
+              I turn complex requirements into scalable, reliable applications
+              by combining full-stack development, thoughtful architecture, and
+              a strong problem-solving mindset.
             </motion.p>
 
             <motion.div
